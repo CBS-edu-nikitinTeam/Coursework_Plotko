@@ -67,9 +67,9 @@ input::-moz-focus-inner {
 
 input, select, textarea {
 	-moz-appearance: none;
-	-webkit-appearance: none;
+	/*-webkit-appearance: none;*/
 	-ms-appearance: none;
-	appearance: none;
+	/*appearance: none;*/
 }
 
 /* Basic */
@@ -2415,10 +2415,11 @@ input, select, textarea {
 	@media screen and (max-width: 1680px) {
 
 		/* Basic */
+		body, input, textarea, select {
+			font-size: 12pt;
+		}
 
-			body, input, textarea, select {
-				font-size: 12pt;
-			}
+			
 
 	}
 
@@ -2427,12 +2428,13 @@ input, select, textarea {
 	@media screen and (max-width: 1280px) {
 
 		/* Basic */
+		body, input, select, textarea {
+			font-size: 11pt;
+			line-height: 1.5em;
+			letter-spacing: 0.015em;
+		}
 
-			body, input, select, textarea {
-				font-size: 11pt;
-				line-height: 1.5em;
-				letter-spacing: 0.015em;
-			}
+			
 
 		/* Wrapper */
 
