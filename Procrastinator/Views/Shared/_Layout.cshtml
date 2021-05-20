@@ -109,12 +109,20 @@
                         </div>
 
                     </div>
-                    <div class="col-4 col-12-medium">
+                    @if (Config.SidebarVisible)
+                    {
+                        <div class="col-4 col-12-medium">
 
-                        <!-- Sidebar -->
-                        @await Html.PartialAsync("SidebarPartial")
+                            <!-- Sidebar -->
 
-                    </div>
+                            @await Html.PartialAsync("SidebarPartial")
+
+
+
+
+                        </div>
+                    }
+
                 </div>
             </div>
         </section>

@@ -1,0 +1,43 @@
+﻿@model Procrastinator.Models.ViewModels.InfoVIewModel
+
+
+@{
+    ViewBag.Title = "Visitors";
+}
+
+<h2>Visitors of our gym</h2>
+
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label">Find by last name</label>
+        <input name="name" class="form-control" />
+
+        <label class="control-label">Coach</label>
+        <select name="coach" asp-items="@Model.Coaches" class="form-control"></select>
+
+        <input type="submit" value="Find" class="btn btn-default" />
+    </div>
+</form>
+
+<table class="table table-striped">
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Phone number</th>
+        <th>Coach</th>
+
+    </tr>
+
+    @foreach (var item in Model.GymVisitors)
+    {
+        int cId = item.CoachId;
+<tr>
+    <td>@item.FirstName</td>
+    <td>@item.LastName</td>
+    <td>@item.Phone</td>
+    <td>@Model.GymCoaches.Where(p => p.Id == cId).First().LastName</td>
+
+
+</tr>
+    }
+</table>

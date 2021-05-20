@@ -26,6 +26,7 @@ namespace Procrastinator
 
             services.AddDbContext<ProcrastinatorContext>(options => 
             options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllersWithViews();
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
