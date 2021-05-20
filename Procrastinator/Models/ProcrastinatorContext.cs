@@ -8,6 +8,7 @@ namespace Procrastinator.Models
     {
         public DbSet<GymVisitor> GymVisitors { get; set; }
         public DbSet<GymCoach> GymCoaches { get; set; }
+        public DbSet<Disabled> DisabledPeople { get; set; }
         public ProcrastinatorContext(DbContextOptions<ProcrastinatorContext> options) : base(options)
         {
             //Database.EnsureCreated();

@@ -19,25 +19,45 @@
     </div>
 </form>
 
-<table class="table table-striped">
+<table cellspacing="0" cellpadding="0" border="0" width="325">
     <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Phone number</th>
-        <th>Coach</th>
+        <td>
+            <table cellspacing="0" cellpadding="1" border="1" width="600">
+                <tr style="color:white;background-color:grey">
+                    <th align="center">First name</th>
+                    <th align="center">Last name</th>
+                    <th align="center">Phone number</th>
+                    <th align="left">Coach</th>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="width:800px; height:800px; overflow:auto;">
+                <table cellspacing="0" cellpadding="1" border="1" width="600">
 
+                    @foreach (var item in Model.GymVisitors)
+                    {
+                        int cId = item.CoachId;
+                        <tr>
+                            <td align="center">@item.FirstName</td>
+                            <td align="center">@item.LastName</td>
+                            <td align="center">@item.Phone</td>
+                            <td align="center">@Model.GymCoaches.Where(p => p.Id == cId).First().LastName</td>
+
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
     </tr>
 
-    @foreach (var item in Model.GymVisitors)
-    {
-        int cId = item.CoachId;
-<tr>
-    <td>@item.FirstName</td>
-    <td>@item.LastName</td>
-    <td>@item.Phone</td>
-    <td>@Model.GymCoaches.Where(p => p.Id == cId).First().LastName</td>
 
 
-</tr>
-    }
-</table>
+
+    
+
+
+ </table>
