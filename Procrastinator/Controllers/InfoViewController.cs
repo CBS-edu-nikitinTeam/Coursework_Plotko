@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Procrastinator.Controllers
 {
     public class InfoViewController : Controller
@@ -36,11 +37,19 @@ namespace Procrastinator.Controllers
             //    db.SaveChanges();
             //}
         }
-        public ActionResult Index(int? coach, string name)
+        public ActionResult Index(int? coach, string name, SortState sortOrder = SortState.NameAsc)
         {
             //IQueryable<GymVisitor> users = db.GymVisitors.Include(p => p.CoachId);
             IQueryable<GymVisitor> users = db.GymVisitors.Where(p => p.CoachId != null);
-            
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            users = sortOrder switch
+            {
+                SortState.NameDesc => users.OrderByDescending(s => s.LastName),
+                SortState.CompanyAsc => users.OrderBy(s => s.LastName),
+                SortState.CompanyDesc => users.OrderByDescending(s => s.LastName),
+                _ => users.OrderBy(s => s.LastName),
+            };
+
             if (coach != null && coach != 0)
             {
                 users = users.Where(p => p.CoachId == coach);
@@ -67,11 +76,41 @@ namespace Procrastinator.Controllers
             
             return View(viewModel);
         }
+        public async Task<IActionResult> Sort(SortState sortOrder = SortState.NameAsc)
+        {
+            IQueryable<GymVisitor> users = db.GymVisitors.Where(x => x.CoachId!=null);
+
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            
+
+            users = sortOrder switch
+            {
+                SortState.NameDesc => users.OrderByDescending(s => s.LastName),
+                SortState.CompanyAsc => users.OrderBy(s => s.LastName),
+                SortState.CompanyDesc => users.OrderByDescending(s => s.LastName),
+                _ => users.OrderBy(s => s.LastName),
+            };
+            return View(await users.AsNoTracking().ToListAsync());
+        }
+        public IActionResult Pie()
+        {
+            Random rnd = new Random();
+            IQueryable<GymCoach> coaches = db.GymCoaches.Where(p => p.LastName != null);
+
+
+            var lstModel = new List<SimpleReportViewModel>();
+            foreach(GymCoach coach in coaches)
+            {
+                lstModel.Add(new SimpleReportViewModel
+                {
+                    DimensionOne = coach.LastName,
+                    Quantity = db.GymVisitors.Where(a => a.CoachId == coach.Id).Count()
+                }); 
+            }
+            
+            return View(lstModel);
+        }
+        
     }
 }
 
-///var balance = (from a in context.Accounts
-///               join c in context.Clients on a.UserID equals c.UserID
-///               where c.ClientID == yourDescriptionObject.ClientID
-///               select a.Balance)
-///              .SingleOrDefault();
