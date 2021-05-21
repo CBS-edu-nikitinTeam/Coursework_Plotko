@@ -4,7 +4,7 @@
 @{
     var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.DimensionOne).ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Quantity).ToList());
-    ViewData["Title"] = "Pie Chart";
+    
 }
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@
         var data = {
                 labels: @Html.Raw(XLabels),
                 datasets: [{
-                    label: "Drinks Chart",
+                    label: "Coach Chart",
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

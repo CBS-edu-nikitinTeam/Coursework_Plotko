@@ -39,6 +39,7 @@ namespace Procrastinator.Controllers
         }
         public ActionResult Index(int? coach, string name, SortState sortOrder = SortState.NameAsc)
         {
+            ViewBag.Title = "Visitors info";
             //IQueryable<GymVisitor> users = db.GymVisitors.Include(p => p.CoachId);
             IQueryable<GymVisitor> users = db.GymVisitors.Where(p => p.CoachId != null);
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
@@ -94,6 +95,7 @@ namespace Procrastinator.Controllers
         }
         public IActionResult Pie()
         {
+            ViewBag.Title = "Coaches and their clients";
             Random rnd = new Random();
             IQueryable<GymCoach> coaches = db.GymCoaches.Where(p => p.LastName != null);
 
